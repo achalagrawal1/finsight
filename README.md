@@ -16,3 +16,4 @@ This is a full-stack Expense Tracker project using Django (backend) and React (f
    - Install dependencies: `npm install`
    - Start frontend: `npm start`
 
+
