@@ -125,4 +125,6 @@ def change_password(request,user_id):
 
         except:
             return JsonResponse({'message':'User not found'},status=400)
-        
+
+
+  
