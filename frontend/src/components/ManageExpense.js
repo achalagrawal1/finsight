@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from "./constants";
+
+
 
 const ManageExpense = () => {
     const navigate = useNavigate();
@@ -28,7 +31,8 @@ const ManageExpense = () => {
 
     const fetchExpenses = async (userId) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/manage_expense/${userId}`);
+            const response = await fetch(`${BASE_URL}/api/manage_expense/${userId}`);
+          
             const data = await response.json();
             setExpenses(data);
         }
@@ -47,6 +51,7 @@ const ManageExpense = () => {
                 headers : {'Content-Type':'application/json'},
                 body : JSON.stringify(editExpense)
             });
+            
             if(response.status === 200){
                 toast.success('Expense updated successfully!');
                 setEditExpense(null); 
@@ -70,6 +75,7 @@ const ManageExpense = () => {
             const response = await fetch(`http://127.0.0.1:8000/api/delete_expense/${expenseId}/`,{
                 method : 'DELETE', 
             });
+            
             if(response.status === 200){
                 toast.success('Expense deleted successfully!');
                 fetchExpenses(userId); 

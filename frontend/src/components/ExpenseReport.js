@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from "./constants";
+
+
 
 const ExpenseReport = () => {
     const navigate = useNavigate();
@@ -22,8 +25,9 @@ const ExpenseReport = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/search_expense/${userId}/?from=${fromDate}&to=${toDate}`);
+            const response = await fetch(`${BASE_URL}/api/search_expense/${userId}/?from=${fromDate}&to=${toDate}`);
 
+         
             const data = await response.json();
             setExpenses(data.expenses);
             setGrandTotal(data.total);

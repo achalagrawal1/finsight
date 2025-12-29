@@ -52,8 +52,8 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+# db.sqlite3
+# db.sqlite3-journal
 backend/settings.py
 
 
@@ -68,3 +68,5 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.*
+.env.production

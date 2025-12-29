@@ -1,45 +1,47 @@
-import React, {useState , useEffect} from 'react';
-import {toast , ToastContainer} from 'react-toastify';
+import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from "./constants";
+
 
 function AddExpense() {
-const navigate = useNavigate();
-    const [formData,setFormData] = useState({
-        ExpenseDate:'',
-        ExpenseItem:'',
-        ExpenseCost:'', 
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        ExpenseDate: '',
+        ExpenseItem: '',
+        ExpenseCost: '',
 
     });
 
     const userId = localStorage.getItem('userId');
-    useEffect(()=>{
-        if (!userId){
+    useEffect(() => {
+        if (!userId) {
             navigate('/login');
         }
-    },[]);
+    }, []);
 
 
     const handleChange = (e) => {
-        setFormData ({...formData,[e.target.name]:e.target.value});
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    const handleSubmit = async (e)  => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const response = await fetch("http://127.0.0.1:8000/api/add_expense/",{
+        try {
+            const response = await fetch(`${BASE_URL}/api/add_expense/`,{
                 method : 'POST' , 
                 headers : {'Content-Type':'application/json'},
                 body : JSON.stringify({
                     ...formData,
                     UserId:userId 
                 })
-                
-            });
+
+            });  
 
             const data = await response.json();
-            if(response.status===201){
+            if (response.status === 201) {
                 toast.success(data.message);
-                setTimeout(()=>{
+                setTimeout(() => {
                     navigate('/dashboard');
                 }, 2000);
             }
@@ -50,74 +52,73 @@ const navigate = useNavigate();
 
 
         }
-        catch(error)
-        {
-            console.error('Error:',error);
+        catch (error) {
+            console.error('Error:', error);
             toast.error('Something went wrong. Try again');
         }
     };
 
-  return (
-    <div className='container mt-5'>
-        <div className='text-center mb-4'>
-           <h2><i className='fas fa-plus-circle me-2'></i>Add Expense </h2>
-           <p className='text-muted'>Track your new spending here </p>
-        </div>            
-
-
-
-        <form className='p-4 rounded shadow mx-auto' style={{maxWidth:'400px'}} onSubmit={handleSubmit} autoComplete='off'> 
-            <div className='mb-3'>
-                <label className='form-label'>Expense Date</label>
-                <div className='input-group'>
-                    <span className='input-group-text'>
-                        <i className='fas fa-calendar-alt'>
-
-                        </i>
-                    </span>
-                    <input type="date" name = "ExpenseDate" value = {formData.ExpenseDate} className='form-control' onChange={handleChange} required /> 
-                </div>
-                
+    return (
+        <div className='container mt-5'>
+            <div className='text-center mb-4'>
+                <h2><i className='fas fa-plus-circle me-2'></i>Add Expense </h2>
+                <p className='text-muted'>Track your new spending here </p>
             </div>
 
-            <div className='mb-3'>
-                <label className='form-label'>Expense Item</label>
-                <div className='input-group'>
-                    <span className='input-group-text'>
-                        <i className='fas fa-shopping-cart'>
 
-                        </i>
-                    </span>
-                    <input type="text" name = "ExpenseItem" value = {formData.ExpenseItem} className='form-control' onChange={handleChange} autoComplete='off' required placeholder='Enter expense item(e.g. Grocries, Petrol'/>
+
+            <form className='p-4 rounded shadow mx-auto' style={{ maxWidth: '400px' }} onSubmit={handleSubmit} autoComplete='off'>
+                <div className='mb-3'>
+                    <label className='form-label'>Expense Date</label>
+                    <div className='input-group'>
+                        <span className='input-group-text'>
+                            <i className='fas fa-calendar-alt'>
+
+                            </i>
+                        </span>
+                        <input type="date" name="ExpenseDate" value={formData.ExpenseDate} className='form-control' onChange={handleChange} required />
+                    </div>
+
                 </div>
-                
-            </div>
 
-            <div className='mb -3'>
-                <label className='form-label'>Expense Cost(₹)</label>
-                <div className='input-group'>
-                    <span className='input-group-text'>
-                        <i className='fas fa-rupee-sign'>
+                <div className='mb-3'>
+                    <label className='form-label'>Expense Item</label>
+                    <div className='input-group'>
+                        <span className='input-group-text'>
+                            <i className='fas fa-shopping-cart'>
 
-                        </i>
-                    </span>
-                    <input type="number" name = "ExpenseCost" value = {formData.ExpenseCost} className='form-control' onChange={handleChange}  required placeholder='Enter amount spent'/>
+                            </i>
+                        </span>
+                        <input type="text" name="ExpenseItem" value={formData.ExpenseItem} className='form-control' onChange={handleChange} autoComplete='off' required placeholder='Enter expense item(e.g. Grocries, Petrol' />
+                    </div>
+
                 </div>
-                
-            </div>
 
-            <button type="submit" className='btn btn-primary w-100 mt-3'>
-                <i className="fas fa-plus me-2">
+                <div className='mb -3'>
+                    <label className='form-label'>Expense Cost(₹)</label>
+                    <div className='input-group'>
+                        <span className='input-group-text'>
+                            <i className='fas fa-rupee-sign'>
 
-                </i>
-                Add Expense
-            </button>
-        </form>
+                            </i>
+                        </span>
+                        <input type="number" name="ExpenseCost" value={formData.ExpenseCost} className='form-control' onChange={handleChange} required placeholder='Enter amount spent' />
+                    </div>
 
-            <ToastContainer/> 
-      
-    </div>
-  )
+                </div>
+
+                <button type="submit" className='btn btn-primary w-100 mt-3'>
+                    <i className="fas fa-plus me-2">
+
+                    </i>
+                    Add Expense
+                </button>
+            </form>
+
+            <ToastContainer />
+
+        </div>
+    )
 }
 
 export default AddExpense; 

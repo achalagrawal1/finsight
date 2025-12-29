@@ -21,7 +21,9 @@ def signup(request):
             return JsonResponse({'message':'Email already exists'},status=400)
         UserDetail.objects.create(FullName = fullname, Email = email, Password = password)
         return JsonResponse({'message':'User registered Sucessfully'},status=201)
-    
+    return JsonResponse({'message':'Only POST method allowed'}, status=405)
+
+
 #Login API 
 @csrf_exempt
 def login(request):
