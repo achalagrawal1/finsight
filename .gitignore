@@ -70,3 +70,7 @@ env.bak/
 venv.bak/
 .env.*
 .env.production
+
+finish_env
+
+backend/node_modules 
