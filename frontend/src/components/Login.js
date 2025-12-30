@@ -7,7 +7,7 @@ import BASE_URL from "./constants";
 
 
 
-const login = () => {
+const Login = () => {
 
 
 
@@ -113,4 +113,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login;
