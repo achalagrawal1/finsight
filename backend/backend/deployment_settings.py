@@ -21,9 +21,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS_ALLOW_ORIGINS = [
-#     "http://localhost:3000",
-# ] 
+CORS_ALLOWED_ORIGINS = [
+    "https://finsight-frontend-xywb.onrender.com",
+] 
 
 STORAGES = {
     "default":{
